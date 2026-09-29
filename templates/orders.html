@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f9;
+            color: #333;
+        }
+
+        /* Header */
+
+        header {
+            background-color: #e23744;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        /* Main */
+
+        .orders-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .orders-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Order Card */
+
+        .order-card {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-card h3 {
+            color: #e23744;
+            margin-top: 0;
+        }
+
+        .order-card p {
+            margin: 8px 0;
+        }
+
+        /* Back button */
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+
+            padding: 10px 18px;
+
+            background-color: #e23744;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: #c91f2d;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+
+        <h1>My Orders</h1>
+
+    </header>
+
+
+    <!-- Orders -->
+
+    <div class="orders-container">
+
+        <h2>Your Recent Orders</h2>
+
+        <div id="orders"></div>
+
+        <div style="text-align: center;">
+
+            <a href="/" class="back-button">
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        fetch("/orders")
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                let ordersDiv =
+                    document.getElementById("orders");
+
+                data.forEach(order => {
+
+                    let orderDiv =
+                        document.createElement("div");
+
+                    orderDiv.className = "order-card";
+
+                    orderDiv.innerHTML =
+                        "<h3>Order #" +
+                        order.order_id +
+                        "</h3>" +
+
+                        "<p><b>Item:</b> " +
+                        order.item_name +
+                        "</p>" +
+
+                        "<p><b>Price:</b> ₹" +
+                        order.price +
+                        "</p>" +
+
+                        "<p><b>Quantity:</b> " +
+                        order.quantity +
+                        "</p>" +
+
+                        "<p><b>Delivery Address:</b> " +
+                        order.delivery_address +
+                        "</p>" +
+
+                        "<p><b>Order Date:</b> " +
+                        order.order_date +
+                        "</p>";
+
+                    ordersDiv.appendChild(orderDiv);
+
+                });
+
+            });
+
+    </script>
+
+</body>
+
+</html>

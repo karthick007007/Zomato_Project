@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Sales Analytics</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f9;
+            color: #333;
+        }
+
+
+        /* Header */
+
+        header {
+            background-color: #e23744;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+
+        /* Dashboard */
+
+        .dashboard {
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+
+        /* Total Revenue */
+
+        .revenue-card {
+            background-color: white;
+            width: 300px;
+            margin: auto;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .revenue-card h2 {
+            color: #e23744;
+        }
+
+        #total-revenue {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+
+        /* Sections */
+
+        .item-section {
+            margin-top: 40px;
+        }
+
+        .item-section h2 {
+            text-align: center;
+        }
+
+
+        /* Cards Container */
+
+        .items {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+
+        /* Item Cards */
+
+        .item-card {
+            background-color: white;
+            width: 200px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .item-card h3 {
+            color: #e23744;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Header -->
+
+    <header>
+
+        <h1>
+            Sales Analytics Dashboard
+        </h1>
+
+    </header>
+
+
+    <!-- Dashboard -->
+
+    <div class="dashboard">
+
+
+        <!-- Total Revenue -->
+
+        <div class="revenue-card">
+
+            <h2>
+                Total Revenue
+            </h2>
+
+            <p id="total-revenue">
+                Loading...
+            </p>
+
+        </div>
+
+
+
+        <!-- Revenue by Item -->
+
+        <div class="item-section">
+
+            <h2>
+                Revenue by Item
+            </h2>
+
+            <div
+                class="items"
+                id="revenue-by-item">
+            </div>
+
+        </div>
+
+
+
+        <!-- Revenue by Category -->
+
+        <div class="item-section">
+
+            <h2>
+                Revenue by Category
+            </h2>
+
+            <div
+                class="items"
+                id="revenue-by-category">
+            </div>
+
+        </div>
+
+            <!-- Revenue by Payment Method -->
+
+   <div class="item-section">
+
+     <h2>
+        Revenue by Payment Method
+     </h2>
+
+     <div
+        class="items"
+        id="revenue-by-payment">
+     </div>
+
+   </div>
+
+    </div>
+
+
+
+    <!-- JavaScript -->
+
+    <script>
+
+
+        // ==========================================
+        // 1. TOTAL REVENUE
+        // ==========================================
+
+        fetch("/analytics/total-revenue")
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                document
+                    .getElementById("total-revenue")
+                    .innerText =
+                    "₹" + data.total_revenue;
+
+            });
+
+
+
+        // ==========================================
+        // 2. REVENUE BY ITEM
+        // ==========================================
+
+        fetch("/analytics/revenue-by-item")
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                let revenueDiv =
+                    document.getElementById(
+                        "revenue-by-item"
+                    );
+
+
+                data.forEach(item => {
+
+                    let itemDiv =
+                        document.createElement("div");
+
+
+                    itemDiv.className =
+                        "item-card";
+
+
+                    itemDiv.innerHTML =
+                        "<h3>" +
+                        item.item_name +
+                        "</h3>" +
+
+                        "<p>₹" +
+                        item.total_revenue +
+                        "</p>";
+
+
+                    revenueDiv.appendChild(
+                        itemDiv
+                    );
+
+                });
+
+            });
+
+
+
+        // ==========================================
+        // 3. REVENUE BY CATEGORY
+        // ==========================================
+
+        fetch("/analytics/revenue-by-category")
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                let categoryDiv =
+                    document.getElementById(
+                        "revenue-by-category"
+                    );
+
+
+                data.forEach(category => {
+
+                    let categoryCard =
+                        document.createElement("div");
+
+
+                    categoryCard.className =
+                        "item-card";
+
+
+                    categoryCard.innerHTML =
+                        "<h3>" +
+                        category.category_name +
+                        "</h3>" +
+
+                        "<p>₹" +
+                        category.total_revenue +
+                        "</p>";
+
+
+                    categoryDiv.appendChild(
+                        categoryCard
+                    );
+
+                });
+
+            });
+        // Revenue by Payment Method
+
+        fetch("/analytics/revenue-by-payment")
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                let paymentDiv =
+                    document.getElementById("revenue-by-payment");
+
+                data.forEach(payment => {
+
+                    let paymentCard =
+                        document.createElement("div");
+
+                    paymentCard.className = "item-card";
+
+                    paymentCard.innerHTML =
+                        "<h3>" + payment.payment_method + "</h3>" +
+                        "<p>₹" + payment.total_revenue + "</p>";
+
+                    paymentDiv.appendChild(paymentCard);
+
+                });
+
+            });
+
+    </script>
+
+
+</body>
+
+</html>

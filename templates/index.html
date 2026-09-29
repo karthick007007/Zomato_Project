@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Zomato-like App</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+        <h1>Welcome to the Zomato-like App</h1>
+    </header>
+
+
+    <!-- Main Content -->
+
+    <main>
+
+        <h2 class="section-title">
+            Order Your Favorite Dishes!
+        </h2>
+
+
+        <!-- Food Items -->
+
+        <div class="food-container">
+
+            <div class="food-item">
+
+                <h3>Biriyani</h3>
+
+                <p>₹150</p>
+
+                <button onclick="addToCart('Biriyani', 150)">
+                    Add to Cart
+                </button>
+
+            </div>
+
+
+            <div class="food-item">
+
+                <h3>Paneer</h3>
+
+                <p>₹100</p>
+
+                <button onclick="addToCart('Paneer', 100)">
+                    Add to Cart
+                </button>
+
+            </div>
+
+
+            <div class="food-item">
+
+                <h3>Butter Chicken</h3>
+
+                <p>₹200</p>
+
+                <button onclick="addToCart('Butter Chicken', 200)">
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Cart -->
+
+        <div class="cart-section">
+
+            <h2>Your Cart:</h2>
+
+            <div id="cart"></div>
+
+
+            <!-- Address -->
+
+            <div class="address-section">
+
+                <label for="address">
+                    Delivery Address:
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    id="address"
+                    placeholder="Enter your address"
+                >
+
+            </div>
+
+
+            <!-- Place Order -->
+
+            <button
+                class="place-order"
+                onclick="placeOrder()">
+
+                Place Order
+
+            </button>
+
+        </div>
+
+
+        <!-- My Orders -->
+
+        <a href="/orders-page" class="orders-link">
+            My Orders
+        </a>
+
+    </main>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
